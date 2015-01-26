@@ -1,0 +1,9 @@
+<h1><%= @division.description %> employees:</h1>
+
+<% @division.employees.each do |employee| %>
+<ul>
+  <li><%= employee.name %></li>
+</ul>
+<% end %>
+
+<a href="/">Return to Main Page</a>
