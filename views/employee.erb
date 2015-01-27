@@ -1,0 +1,23 @@
+<h1>Info for <%= @employee.name %></h1>
+
+<h3>Division: <%= @employee.division.description %></h3>
+<h4>Projects:
+  <% if @projects.any? %>
+<ul>
+  <% @employee.projects.each do |project| %>
+  <li><a href="/project/<%= project.id %>"><%= project.title %></a></li>
+  <% end %>
+</ul>
+  <% else %>
+  <p>This employee is going to get lazy if you do not assign them anything!</p>
+  <% end %>
+
+<form action='/projects' method='post'>
+  <label for="title">Title</label>
+  <input id="title" name="title" type='text'>
+  <input value="<%= @employee.id %>" name="employee_id" type="hidden">
+
+  <button type="submit">Add project</button>
+</form>
+
+<a href="/">Return to Main Page</a>

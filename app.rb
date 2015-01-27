@@ -4,6 +4,7 @@ also_reload("lib/**/*.rb")
 require("sinatra/activerecord")
 require("./lib/employee")
 require("./lib/division")
+require("./lib/project")
 require("pg")
 require("pry")
 
@@ -54,4 +55,24 @@ patch("/employees/:id") do
   @employee = Employee.find(params.fetch("id").to_i())
   @employee.update({:name => name})
   redirect("/")
+end
+
+get("/employee/:id") do
+  @employee = Employee.find(params.fetch("id").to_i())
+  @projects = @employee.projects
+  erb(:employee)
+end
+
+post("/projects") do
+  employee_id = params.fetch("employee_id")
+  project_title = params.fetch("title")
+  @project = Project.create({:title => project_title, :employee_id => employee_id})
+  @projects = Project.all()
+  @employee = Employee.find(employee_id)
+  @employee.projects << @project
+  erb(:employee)
+end
+
+get("/projects/:id") do
+  erb(:project)
 end
